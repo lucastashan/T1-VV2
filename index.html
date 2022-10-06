@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Trabalho 1 de verificação e validação de software II</title>
-    </head>
 
-    <body onload="onload()">
-        <main>
-            <select name="selectOperador" id="ops">
-                <option value="null">Usuários</option>
+<head>
+    <meta charset="UTF-8" />
+    <title>Trabalho 1 de verificação e validação de software II</title>
+</head>
+
+<body onload="onload()">
+    <main>
+        <select name="selectOperador" id="ops">
+            <option value="null" hidden>Usuários</option>
+        </select>
+        <h2 class="center">Cadastrar usuário</h2>
+        <p>
+        <form>
+            <label>Nome:</label>
+            <input id="userName" type="text" />
+            <br>
             </select>
-            <h2 class="center">Cadastrar usuário</h2>
-                <p>
-                    <form>
-                        <label>Nome:</label>
-                        <input id="userName" type="text"/>
-                    <br>
-                </select>
-                    <br>
-                    <button onclick="submitForm(); window.location.reload();" type="button" id="submit">Cadastrar</button>
-                    </form>
-                </p>
-        </main>
-    </body>
+            <br>
+            <button onclick="submitForm();" type="button" id="submit">Cadastrar</button>
+        </form>
+        </p>
+        <button onclick="deleteForm();" type="button" id="delete">Deletar</button>
+        <a href="./dashboard/index.html">Entrar</a>
+    </main>
+</body>
+
 </html>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
+    integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript" src="app.js"></script>

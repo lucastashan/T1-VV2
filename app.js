@@ -1,28 +1,41 @@
-function Operador(nome) {
-    this.nome = nome
-}
 
-var listaOperadores = []
+var listaOperadores = ['Joao Pedro', 'Daniel Silva', 'Ana Carolina']
 
-op1 = new Operador('Daniel')
-op2 = new Operador('Rosa')
+atualizaLista()
 
-operadores.push(op1)
-operadores.push(op2)
-
-window.submitForm = function submitForm() {
+function submitForm() {
     var nome = document.getElementById("userName").value
-    var operador = getUserObject(nome)
-    listaOperadores.push(operador)
-}
-
-window.getUserObject = function getUserObject(name) {
-    var userObject = {
-        name: nome
-    }
-    return userObject
-}
-
-window.buildUserList = function buildUserList() {
+    // var operador = getUserObject(nome)
+    listaOperadores.push(nome)
+    console.log(listaOperadores)
     
+    atualizaLista()
+}
+
+
+function deleteForm() {
+    var nome = document.getElementById("ops").value
+    listaOperadores = listaOperadores.filter(function(item) {
+        return item !== nome
+    })
+    console.log(listaOperadores)
+    atualizaLista()
+}
+
+function atualizaLista() {
+    var x = document.getElementById('ops')
+    x.innerHTML = ''
+    listaOperadores.forEach(element => {
+        var option = document.createElement('option')
+        option.text = element
+        x.add(option)
+    })
+}
+
+function changePage() {
+    window.location.href = 'dashboard/index.html'
+}
+
+function printar() {
+    console.log(listaOperadores)
 }
