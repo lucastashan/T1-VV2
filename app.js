@@ -39,3 +39,24 @@ function changePage() {
 function printar() {
     console.log(listaOperadores)
 }
+
+// Entregas
+var id = 1
+var dataAtual = new Date()
+class Entrega {
+    constructor(descricao, nrCasa, operador) {
+        this.id = id
+        id++
+        this.dia = dataAtual.getDate()
+        this.mes = dataAtual.getMonth()
+        this.ano = dataAtual.getFullYear()
+        this.horas = dataAtual.getHours()
+        this.minutos = dataAtual.getMinutes()
+        this.descricao = descricao
+        this.nrCasa = nrCasa
+        this.operador = operador
+    }
+}
+
+const ent = new Entrega('sei la', '123', 'Daniel')
+console.log('ent:' + ent.id + ' ' + ent.dia)
