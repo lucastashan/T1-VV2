@@ -15,11 +15,24 @@ function submitForm() {
 
 function deleteForm() {
     var nome = document.getElementById("ops").value
-    listaOperadores = listaOperadores.filter(function(item) {
-        return item !== nome
-    })
-    // console.log(listaOperadores)
+    deleteOperador(nome)
+    console.log(listaOperadores)
     atualizaLista()
+}
+
+function deleteOperador(nome) {
+    var bool = true
+    listaEntregas.forEach(element => {
+        if(element.operador === nome){
+            alert('O operador possui uma entrega vinculada a ela.')
+            bool = false
+        }
+    })
+    if(bool){
+        listaOperadores = listaOperadores.filter(function(item) {
+            return item !== nome
+        })
+    }
 }
 
 function atualizaLista() {
@@ -63,12 +76,15 @@ var listaEntregas = [
 ]
 
 function registraEntrega() {
-    var entrega = new Entrega(
+    regEntrega(
         document.getElementById('descEntrega').value,
         document.getElementById('nrCasaEntrega').value,
         document.getElementById('opEntrega').value
     )
+}
 
+function regEntrega(descricao, nrCasa, operador) {
+    var entrega = new Entrega(descricao, nrCasa, operador)
     if(listaOperadores.includes(entrega.operador)) {
         listaEntregas.push(entrega)
     } else {
