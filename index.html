@@ -30,14 +30,53 @@
                 <form>
                     <label>Descrição:</label>
                     <input id="descEntrega" type="text"/>
+
                     <label>Número da casa:</label>
                     <input id="nrCasaEntrega" type="text"/>
+
                     <label>Operador que recebeu:</label>
                     <input id="opEntrega" type="text"/>
                     <br>
                     </select>
                     <br>
                     <button onclick="registraEntrega()" type="button" id="submitEntrega">Registrar Entrega</button>
+                </form>
+            </p>
+
+            <p class="center"> - Pesquisar uma entrega:
+                <form>
+                    <label>Descrição:</label>
+                    <input id="pesqDescEntrega" type="text"/>
+                    <button onclick="pesquisarDescricao()" type="button" id="submitDescEntrega">Pesquisar</button>
+                </form>
+
+                <table id="ulPesqEntregas">
+
+                </table>
+            </p>
+
+            <p class="center"> - Listar todas as entregas que não foram retiradas:
+                <br>
+                <button onclick="EntregasNaoRetiradas()" type="button" id="submitEntregasNaoRet">Pesquisar</button>
+
+                <table id="ulEntregasNaoRetiradas">
+
+                </table>
+            </p>
+
+            <h2 class="center">Registrar uma retirada:</h2>
+            <p>
+                <form>
+                    <label>Id da entrega:</label>
+                    <input type="text" id="idEntrega">
+
+                    <label>Morador que retirou:</label>
+                    <input type="text" id="moradorRet">   
+
+                    <br>
+                    </select>
+                    <br>
+                    <button onclick="registraRetirada()" type="button" id="submitRetirada">Registrar Retirada</button>
                 </form>
             </p>
 
@@ -60,9 +99,9 @@
             </p>
 
             <h2 class="center">Lista de moradores:</h2>
-            <ul id="ulMoradores">
+            <table id="tbMoradores">
 
-            </ul>
+            </table>
 
         </div>
     </main>

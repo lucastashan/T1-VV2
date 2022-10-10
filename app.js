@@ -52,6 +52,7 @@ class Entrega {
         //     this.operador = operador
         // }
         this.operador = operador
+        this.retirada = false
     }
 }
 
@@ -126,46 +127,131 @@ function getAtivos(numCasa) {
     return ativas
 }
 
-// Faz a lista de moradores
-function ulMoradores() {
+// Faz a tabela de moradores
+function tbMoradores() {
+    var item = document.createElement('tr')
+    var nome = item.appendChild(document.createElement('th'))
+    nome.appendChild(document.createTextNode('Nome'))
+    var rg = item.appendChild(document.createElement('th'))
+    rg.appendChild(document.createTextNode('RG'))
+    var nrCasa = item.appendChild(document.createElement('th'))
+    nrCasa.appendChild(document.createTextNode('Número da casa'))
+    var ativo = item.appendChild(document.createElement('th'))
+    ativo.appendChild(document.createTextNode('Ativo'))
+    document.getElementById('tbMoradores').appendChild(item)
     listaMoradores.forEach(element => {
-        var item = document.createElement('li')
-        var nome = item.appendChild(document.createElement('p'))
-        nome.appendChild(document.createTextNode('Nome: '))
-        nome.appendChild(document.createTextNode(element.nomeMorador))
-        item.appendChild(nome)
-        var rg = item.appendChild(document.createElement('p'))
-        rg.appendChild(document.createTextNode('RG: '))
-        rg.appendChild(document.createTextNode(element.rg))
-        item.appendChild(rg)
-        var nrCasa = item.appendChild(document.createElement('p'))
-        nrCasa.appendChild(document.createTextNode('Número da casa: '))
-        nrCasa.appendChild(document.createTextNode(element.nrCasaMorador))
-        item.appendChild(nrCasa)
-        item.appendChild(document.createTextNode('Ativo'))
-        var ativo = item.appendChild(document.createElement('input'))
-        ativo.type = 'checkbox' 
-        ativo.appendChild(document.createTextNode('Ativo'))    
-        item.appendChild(ativo)
-        document.getElementById('ulMoradores').appendChild(item)
+        addMorador(element)
     })
 }
 
-ulMoradores()
+tbMoradores()
 
 function addMorador(morador) {
-    var item = document.createElement('li')
-    var nome = item.appendChild(document.createElement('p'))
-    nome.appendChild(document.createTextNode('Nome: '))
+    var item = document.createElement('tr')
+    var nome = item.appendChild(document.createElement('td'))
     nome.appendChild(document.createTextNode(morador.nomeMorador))
-    item.appendChild(nome)
-    var rg = item.appendChild(document.createElement('p'))
-    rg.appendChild(document.createTextNode('RG: '))
+    var rg = item.appendChild(document.createElement('td'))
     rg.appendChild(document.createTextNode(morador.rg))
-    item.appendChild(rg)
-    var nrCasa = item.appendChild(document.createElement('p'))
-    nrCasa.appendChild(document.createTextNode('Número da casa: '))
+    var nrCasa = item.appendChild(document.createElement('td'))
     nrCasa.appendChild(document.createTextNode(morador.nrCasaMorador))
-    item.appendChild(nrCasa)
-    document.getElementById('ulMoradores').appendChild(item)
+    var ativo = item.appendChild(document.createElement('input'))
+    ativo.type = 'checkbox'
+    ativo.checked = true
+    // ativo.id = morador.rg
+    ativo.addEventListener('change', function() {
+        if (!this.checked) {
+            desativarMorador(morador.rg)
+            this.checked = false
+        } else {
+            alert('Morador não pode ser reativado.')
+            this.checked = false
+        }
+    })
+    document.getElementById('tbMoradores').appendChild(item)
+}
+
+function desativarMorador(rgMorador) {
+    listaMoradores.forEach(element => {
+        if(element.rg === rgMorador) {
+            element.ativo = false
+            return
+        }
+    })
+}
+
+class Retirada {
+    constructor(id, moradorRetirou, operador) {
+        this.id = id
+        var dataAtual = new Date()
+        this.dia = dataAtual.getDate()
+        this.mes = dataAtual.getMonth()
+        this.ano = dataAtual.getFullYear()
+        this.horas = dataAtual.getHours()
+        this.minutos = dataAtual.getMinutes()
+        this.moradorRetirou = moradorRetirou
+        this.operador = operador
+    }
+}
+
+var listaEntregasRetiradas = []
+
+function registraRetirada() {
+    var retirada = new Retirada(
+        document.getElementById('idEntrega').value,
+        document.getElementById('moradorRet').value,
+        document.getElementById('ops').value
+    )
+
+    listaEntregasRetiradas.push(retirada)
+    console.log(listaEntregasRetiradas)
+}
+
+function pesquisarDescricao() {
+    var string = document.getElementById('pesqDescEntrega').value
+    var listaDescricoes = []
+    listaEntregas.forEach(element => {
+        if(element.descricao.includes(string)){
+            listaDescricoes.push(element)
+        }
+    })
+    // console.log(listaDescricoes)
+    resultadoPesquisa(listaDescricoes)
+}
+
+function resultadoPesquisa(listaDescricoes) {
+    var x = document.getElementById('ulPesqEntregas')
+    x.innerHTML = ''
+    var tr = x.appendChild(document.createElement('tr'))
+    var td = tr.appendChild(document.createElement('th'))
+    td.appendChild(document.createTextNode('ID'))
+    td = tr.appendChild(document.createElement('th'))
+    td.appendChild(document.createTextNode('Descrição'))
+    listaDescricoes.forEach(element => {
+        var item = document.createElement('tr')
+        var descricao = item.appendChild(document.createElement('td'))
+        descricao.appendChild(document.createTextNode(element.id))
+        descricao = item.appendChild(document.createElement('td'))
+        descricao.appendChild(document.createTextNode(element.descricao))
+        x.appendChild(item)        
+    });
+}
+
+function EntregasNaoRetiradas() {
+    var x = document.getElementById('ulEntregasNaoRetiradas')
+    x.innerHTML = ''
+    var tr = x.appendChild(document.createElement('tr'))
+    var td = tr.appendChild(document.createElement('th'))
+    td.appendChild(document.createTextNode('ID'))
+    td = tr.appendChild(document.createElement('th'))
+    td.appendChild(document.createTextNode('Descrição'))
+    listaEntregas.forEach(element => {
+        if(!element.retirada) {
+            var item = document.createElement('tr')
+            var descricao = item.appendChild(document.createElement('td'))
+            descricao.appendChild(document.createTextNode(element.id))
+            descricao = item.appendChild(document.createElement('td'))
+            descricao.appendChild(document.createTextNode(element.descricao))
+            x.appendChild(item)
+        }
+    });
 }
