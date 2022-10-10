@@ -14,20 +14,56 @@
             </select>
             <h2 class="center">Cadastrar usuário</h2>
             <p>
-            <form>
-                <label>Nome:</label>
-                <input id="userName" type="text" />
-                <br>
-                </select>
-                <br>
-                <button onclick="submitForm();" type="button" id="submit">Cadastrar</button>
-            </form>
+                <form name="userForm">
+                    <label>Nome:</label>
+                    <input id="userName" type="text" />
+                    <br>
+                    </select>
+                    <br>
+                    <button onclick="submitForm();" type="button" id="submit">Cadastrar usuário</button>
+                </form>
             </p>
-            <button onclick="deleteForm();" type="button" id="delete">Deletar</button>
-            <!-- <a href="./dashboard/index.html">Entrar</a> -->
-        </div>
-        <div>
-            
+            <button onclick="deleteForm();" type="button" id="delete">Deletar usuário</button>
+
+            <h2 class="center">Registrar uma entrega:</h2>
+            <p>
+                <form>
+                    <label>Descrição:</label>
+                    <input id="descEntrega" type="text"/>
+                    <label>Número da casa:</label>
+                    <input id="nrCasaEntrega" type="text"/>
+                    <label>Operador que recebeu:</label>
+                    <input id="opEntrega" type="text"/>
+                    <br>
+                    </select>
+                    <br>
+                    <button onclick="registraEntrega()" type="button" id="submitEntrega">Registrar Entrega</button>
+                </form>
+            </p>
+
+            <h2 class="center">Incluir um novo morador:</h2>
+            <p>
+                <form>
+                    <label>Nome do morador:</label>
+                    <input id="nomeMorador" type="text"/>
+
+                    <label>RG:</label>
+                    <input id="rgMorador" type="text"/>
+
+                    <label>Número da casa:</label>
+                    <input id="nrCasaMorador" type="text"/>
+                    <br>
+                    </select>
+                    <br>
+                    <button onclick="morador()" type="button" id="submitMorador">Registrar Morador</button>
+                </form>
+            </p>
+
+            <h2 class="center">Lista de moradores:</h2>
+            <ul id="ulMoradores">
+
+            </ul>
+
         </div>
     </main>
 </body>
