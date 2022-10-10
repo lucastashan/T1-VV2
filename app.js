@@ -1,5 +1,5 @@
 
-var listaOperadores = ['Joao Pedro', 'Daniel Silva', 'Ana Carolina']
+var listaOperadores = ['Joao Pedro', 'Daniel Silva', 'Ana Carolina', 'Carlos']
 
 atualizaLista()
 
