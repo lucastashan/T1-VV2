@@ -99,12 +99,6 @@ function regEntrega(descricao, nrCasa, operador) {
 class Morador{
     constructor(nomeMorador, rg, nrCasaMorador){
         this.nomeMorador = nomeMorador
-        // AQUI ELE DA ERRO POIS NAO TEM ACESSO A LISTAMORADORES
-        // if(listaMoradores.some(m => m.rg === rg)) {
-        //     this.rg = rg
-        // } else {
-        //     this.rg = rg
-        // }    
         this.rg = rg
         this.nrCasaMorador = nrCasaMorador
         this.ativo = true
@@ -121,24 +115,26 @@ function getListaMoradores () {
 }
 
 function adicionaMorador(nome, rgMorador, nrCasaMorador) {
-	var morador = new Morador(nome, rgMorador, nrCasaMorador) 
-	if(listaMoradores.some(m => m.rg === morador.rg)) {
-		console.log('RG já cadastrado no sistema.')
-	} else if( getAtivos(morador.nrCasaMorador) > 7){
-		console.log('Número de pessoas ativas na casa atingiu o limite.')
-	} else {
-		listaMoradores.push(morador)
+    if(listaMoradores.some(m => m.rg === rgMorador)) {
+        return console.log('RG já cadastrado no sistema.')
+	} else if( getAtivos(nrCasaMorador) > 7){
+        return console.log('Número de pessoas ativas na casa atingiu o limite.')
 	}
-	// console.log(listaMoradores)	
+    var morador = new Morador(nome, rgMorador, nrCasaMorador)
+    listaMoradores.push(morador)
+    return morador
 }
 
 function morador() {
-	adicionaMorador(
+	var m = adicionaMorador(
 		document.getElementById('nomeMorador').value,
         document.getElementById('rgMorador').value,
         document.getElementById('nrCasaMorador').value
 	)
-	addMorador(morador)
+    if(typeof m !== 'undefined'){
+        console.log('entrou no if')
+	    addMorador(m)
+    }
 }
 
 function getAtivos(numCasa) {
@@ -238,7 +234,7 @@ function registraRetirada(idEntrega, moradorRet, operador) {
 	if(aux && entregaExiste) {
 		// Aqui vou mudar a entrega para retirada true
 		listaEntregas.forEach(element => {
-			if(element.id === idEntrega){
+			if(element.id.toString() === idEntrega){
 				element.retirada = true
 				return
 			}
@@ -257,7 +253,7 @@ function getEntregasNaoRetiradas() {
 }
 
 function registraRetiradahtml() {
-    registraEntrega(
+    registraRetirada(
         document.getElementById('idEntrega').value,
         document.getElementById('moradorRet').value,
         document.getElementById('ops').value

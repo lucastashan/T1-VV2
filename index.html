@@ -8,8 +8,10 @@
 
 <body onload="onload()">
     <main>
+        <button onclick="atualizaLista(); tbMoradores()">Start</button>
         <div>
-            <select name="selectOperador" id="ops" onclick="atualizaLista(); tbMoradores()">
+            <br>
+            <select name="selectOperador" id="ops">
                 <option value="null" hidden>Usuários</option>
             </select>
             <h2 class="center">Cadastrar usuário</h2>
@@ -76,7 +78,7 @@
                     <br>
                     </select>
                     <br>
-                    <button onclick="registraRetirada()" type="button" id="submitRetirada">Registrar Retirada</button>
+                    <button onclick="registraRetiradahtml()" type="button" id="submitRetirada">Registrar Retirada</button>
                 </form>
             </p>
 
