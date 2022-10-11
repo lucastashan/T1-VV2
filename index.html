@@ -9,7 +9,7 @@
 <body onload="onload()">
     <main>
         <div>
-            <select name="selectOperador" id="ops">
+            <select name="selectOperador" id="ops" onclick="atualizaLista(); tbMoradores()">
                 <option value="null" hidden>Usuários</option>
             </select>
             <h2 class="center">Cadastrar usuário</h2>
@@ -57,7 +57,7 @@
 
             <p class="center"> - Listar todas as entregas que não foram retiradas:
                 <br>
-                <button onclick="EntregasNaoRetiradas()" type="button" id="submitEntregasNaoRet">Pesquisar</button>
+                <button onclick="entregasNaoRetiradashtml()" type="button" id="submitEntregasNaoRet">Pesquisar</button>
 
                 <table id="ulEntregasNaoRetiradas">
 

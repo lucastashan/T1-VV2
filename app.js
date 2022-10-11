@@ -1,14 +1,13 @@
 
 var listaOperadores = ['Joao Pedro', 'Daniel Silva', 'Ana Carolina', 'Carlos']
 
-atualizaLista()
+function getListaOperadores() {
+	return listaOperadores
+}
 
 function submitForm() {
     var nome = document.getElementById("userName").value
-    // var operador = getUserObject(nome)
-    listaOperadores.push(nome)
-    // console.log(listaOperadores)
-    
+    addOperador(nome)    
     atualizaLista()
 }
 
@@ -20,11 +19,15 @@ function deleteForm() {
     atualizaLista()
 }
 
+function addOperador(nome) {
+	listaOperadores.push(nome)
+}
+
 function deleteOperador(nome) {
     var bool = true
     listaEntregas.forEach(element => {
         if(element.operador === nome){
-            alert('O operador possui uma entrega vinculada a ela.')
+            console.log('O operador possui uma entrega vinculada a ele.')
             bool = false
         }
     })
@@ -49,14 +52,9 @@ function atualizaLista() {
 var id = 1
 class Entrega {
     constructor(descricao, nrCasa, operador) {
-        var dataAtual = new Date()
+        this.date = new Date()
         this.id = id
         id++
-        this.dia = dataAtual.getDate()
-        this.mes = dataAtual.getMonth()
-        this.ano = dataAtual.getFullYear()
-        this.horas = dataAtual.getHours()
-        this.minutos = dataAtual.getMinutes()
         this.descricao = descricao
         this.nrCasa = nrCasa
         // if(listaOperadores.includes(operador)) {
@@ -75,6 +73,10 @@ var listaEntregas = [
     new Entrega('Cama box', '450', 'Daniel Silva')
 ]
 
+function getListaEntregas() {
+	return listaEntregas
+}
+
 function registraEntrega() {
     regEntrega(
         document.getElementById('descEntrega').value,
@@ -88,9 +90,9 @@ function regEntrega(descricao, nrCasa, operador) {
     if(listaOperadores.includes(entrega.operador)) {
         listaEntregas.push(entrega)
     } else {
-        alert('Operador não existe.')
+        console.log('Operador não existe.')
     }
-    console.log(listaEntregas)
+    // console.log(listaEntregas)
 }
 
 // Moradores
@@ -114,23 +116,29 @@ var listaMoradores = [
     new Morador('Karine', '987654321', '910')
 ]
 
+function getListaMoradores () {
+	return listaMoradores
+}
+
+function adicionaMorador(nome, rgMorador, nrCasaMorador) {
+	var morador = new Morador(nome, rgMorador, nrCasaMorador) 
+	if(listaMoradores.some(m => m.rg === morador.rg)) {
+		console.log('RG já cadastrado no sistema.')
+	} else if( getAtivos(morador.nrCasaMorador) > 7){
+		console.log('Número de pessoas ativas na casa atingiu o limite.')
+	} else {
+		listaMoradores.push(morador)
+	}
+	// console.log(listaMoradores)	
+}
+
 function morador() {
-    var morador = new Morador(
-        document.getElementById('nomeMorador').value,
+	adicionaMorador(
+		document.getElementById('nomeMorador').value,
         document.getElementById('rgMorador').value,
         document.getElementById('nrCasaMorador').value
-    )    
-
-    if(listaMoradores.some(m => m.rg === morador.rg)) {
-        alert('RG já cadastrado no sistema.')
-    } else if( getAtivos(morador.nrCasaMorador) > 7){
-        alert('Número de pessoas ativas na casa atingiu o limite.')
-    } else {
-        listaMoradores.push(morador)
-    }
-
-    // console.log(listaMoradores)
-    addMorador(morador)
+	)
+	addMorador(morador)
 }
 
 function getAtivos(numCasa) {
@@ -159,8 +167,6 @@ function tbMoradores() {
         addMorador(element)
     })
 }
-
-tbMoradores()
 
 function addMorador(morador) {
     var item = document.createElement('tr')
@@ -198,12 +204,7 @@ function desativarMorador(rgMorador) {
 class Retirada {
     constructor(id, moradorRetirou, operador) {
         this.id = id
-        var dataAtual = new Date()
-        this.dia = dataAtual.getDate()
-        this.mes = dataAtual.getMonth()
-        this.ano = dataAtual.getFullYear()
-        this.horas = dataAtual.getHours()
-        this.minutos = dataAtual.getMinutes()
+        this.date = new Date()
         this.moradorRetirou = moradorRetirou
         this.operador = operador
     }
@@ -211,15 +212,57 @@ class Retirada {
 
 var listaEntregasRetiradas = []
 
-function registraRetirada() {
-    var retirada = new Retirada(
+function getListaEntregasRetiradas() {
+	return listaEntregasRetiradas
+}
+
+function registraRetirada(idEntrega, moradorRet, operador) {
+	var aux = true
+	var entregaExiste = false
+	listaMoradores.forEach(element => {
+		if(element.rg === moradorRet) {
+			if(!element.ativo) {
+				console.log('Morador inativo. Não é permitida a retirada')
+				aux = false
+			}
+		}
+	})
+	listaEntregas.forEach(element => {
+		if(element.id.toString() === idEntrega){
+			entregaExiste = true
+		}
+	});
+	if(!entregaExiste) {
+		console.log('Entrega inexistente por favor adicione uma entrega válida')
+	}
+	if(aux && entregaExiste) {
+		// Aqui vou mudar a entrega para retirada true
+		listaEntregas.forEach(element => {
+			if(element.id === idEntrega){
+				element.retirada = true
+				return
+			}
+		})
+		var retirada = new Retirada(idEntrega, moradorRet, operador)
+		listaEntregasRetiradas.push(retirada)
+	}
+}
+
+function getEntregasNaoRetiradas() {
+	var entregasNaoRet = listaEntregas.filter(entrega => !entrega.retirada)
+	var sortedEntregasNaoRet = entregasNaoRet.sort(
+		(objA, objB) => Number(objA.date) - Number(objB.date)
+	)
+	return sortedEntregasNaoRet
+}
+
+function registraRetiradahtml() {
+    registraEntrega(
         document.getElementById('idEntrega').value,
         document.getElementById('moradorRet').value,
         document.getElementById('ops').value
     )
-
-    listaEntregasRetiradas.push(retirada)
-    console.log(listaEntregasRetiradas)
+    //console.log(listaEntregasRetiradas)
 }
 
 function pesquisarDescricao() {
@@ -233,6 +276,7 @@ function pesquisarDescricao() {
     // console.log(listaDescricoes)
     resultadoPesquisa(listaDescricoes)
 }
+
 
 function resultadoPesquisa(listaDescricoes) {
     var x = document.getElementById('ulPesqEntregas')
@@ -252,7 +296,7 @@ function resultadoPesquisa(listaDescricoes) {
     });
 }
 
-function EntregasNaoRetiradas() {
+function entregasNaoRetiradashtml() {
     var x = document.getElementById('ulEntregasNaoRetiradas')
     x.innerHTML = ''
     var tr = x.appendChild(document.createElement('tr'))
@@ -271,3 +315,7 @@ function EntregasNaoRetiradas() {
         }
     });
 }
+
+module.exports = { getListaOperadores, deleteOperador, addOperador, Entrega, regEntrega, getListaEntregas,
+adicionaMorador, getListaMoradores, desativarMorador, Morador, registraRetirada, getListaEntregasRetiradas,
+getAtivos, registraRetirada, getEntregasNaoRetiradas}

@@ -1,0 +1,22 @@
+{
+  "name": "t1-vv2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucastashan/T1-VV2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucastashan/T1-VV2/issues"
+  },
+  "homepage": "https://github.com/lucastashan/T1-VV2#readme",
+  "devDependencies": {
+    "jest": "^29.1.2"
+  }
+}
