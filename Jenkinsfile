@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'node:20.9.0'
+    }
+  }
+
   stages {
     stage('hello world') {
       steps {
@@ -7,5 +12,10 @@ pipeline {
       }
     }
 
+    stage('Install dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
   }
 }
